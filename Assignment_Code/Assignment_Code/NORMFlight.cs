@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    internal class NORMFlight
+    class NORMFlight: flight
     {
+        public override double CalculateFee()
+        {
+            return 500 + 800 + 300;
+        }
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
