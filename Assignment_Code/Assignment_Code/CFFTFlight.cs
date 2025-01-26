@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    class CFFTFlight: flight
+    class CFFTFlight : Flight
     {
-        public double requestFees {  get; set; }
+        public double RequestFees {  get; set; }
         public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees):base(flightNumber,origin, destination, expectedTime, status)
         {
-            requestFees = 150;
+            RequestFees = 150;
         }
         public override double CalculateFee()
         {
-            return 500 + 800 + 300 + requestFees;
+            return base.CalculateFee() + RequestFees;
         }
         public override string ToString()
         {

@@ -8,14 +8,14 @@ namespace Assignment_Code
 {
     class LWTTFlight: flight
     {
-        public double requestFee { get; set; }
+        public double RequestFee { get; set; }
         public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees) : base(flightNumber, origin, destination, expectedTime, status)
         {
-            requestFee = 500;
+            RequestFee = 500;
         }
         public override double CalculateFee()
         {
-            return 500 + 800 + 300 + requestFee;
+            return 500 + 800 + 300 + RequestFee;
         }
         public override string ToString()
         {

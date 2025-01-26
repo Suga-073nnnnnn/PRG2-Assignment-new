@@ -8,23 +8,27 @@ namespace Assignment_Code
 {
     class flight
     {
-        public string flightNumber { get; set; }
-        public string origin { get; set; }
-        public string destination { get; set; }
-        public DateTime expectedTime { get; set; }
-        public string status { get; set; }
+        public string FlightNumber { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
+        public DateTime ExpectedTime { get; set; }
+        public string Status { get; set; }
         public flight(string flightNumber, string origin, string destination, DateTime expectedTime, string status)
         {
-            this.flightNumber = flightNumber;
-            this.origin = origin;
-            this.destination = destination;
-            this.expectedTime = expectedTime;
-            this.status = status;
+            this.FlightNumber = flightNumber;
+            this.Origin = origin;
+            this.Destination = destination;
+            this.ExpectedTime = expectedTime;
+            this.Status = status;
         }
-        public override double CalculateFee() { };
+        public virtual double CalculateFee()
+        {
+            return 500 + 800 + 300;
+        }
+
         public override string ToString()
         {
-            return base.ToString();
+            return $"{FlightNumber} from {Origin} to {Destination}"; 
         }
         
     }
