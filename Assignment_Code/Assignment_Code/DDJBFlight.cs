@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    class DDJBFlight : Flight
+    public class DDJBFlight : Flight
     {
         public double RequestFee { get; set; }
         public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees) : base(flightNumber, origin, destination, expectedTime, status)

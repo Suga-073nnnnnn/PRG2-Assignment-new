@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    class NORMFlight: flight
+    public class NORMFlight: flight
     {
         public override double CalculateFee()
         {

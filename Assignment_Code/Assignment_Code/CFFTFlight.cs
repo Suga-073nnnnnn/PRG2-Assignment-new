@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    class CFFTFlight : Flight
+    public class CFFTFlight : Flight
     {
         public double RequestFees {  get; set; }
         public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees):base(flightNumber,origin, destination, expectedTime, status)

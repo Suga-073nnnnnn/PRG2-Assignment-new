@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    class flight
+    public class flight
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_Code
 {
-    class LWTTFlight: flight
+    public class LWTTFlight: flight
     {
         public double RequestFee { get; set; }
         public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees) : base(flightNumber, origin, destination, expectedTime, status)
