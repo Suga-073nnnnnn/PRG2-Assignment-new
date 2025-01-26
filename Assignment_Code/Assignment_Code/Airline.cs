@@ -8,16 +8,16 @@ namespace Assignment_Code
 {
     class Airline
     {
-        public string code { get; set; }
-        public string name { get; set; }
-        
-        public Dictionary<string, Flight> flights { get; set; } = new Dictionary<string, Flight>();
+        public string Code { get; set; }
+        public string Name { get; set; }
+
+        public Dictionary<string, Flight> Flights { get; set; } = new Dictionary<string, Flight>();
 
 
-        public Airline(string Code, string Name)
+        public Airline(string code, string name)
         {
-            code = Code;
-            name = Name;
+            Code = code;
+            Name = name;
         }
 
         public void AddFlight(Flight flight)
@@ -41,4 +41,10 @@ namespace Assignment_Code
 
         }
 
+        public override string ToString()       // Temp ToString() method. *Update it per the sample output doc during testing.
+        {
+            return $"Airline Code: {Code}, Airline Name: {Name}, Number of Flights: {Flights.Count}";
+        }
+
+    }
 }
