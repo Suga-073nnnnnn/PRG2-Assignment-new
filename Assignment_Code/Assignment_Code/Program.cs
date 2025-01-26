@@ -1,4 +1,9 @@
-﻿class Program
+﻿//==========================================================
+// Student Number	: S10270022
+// Student Name	: Suganesan
+// Partner Name	: Gabriel Lee
+//==========================================================
+class Program
 {
     static void Main(string[] args)
     {
