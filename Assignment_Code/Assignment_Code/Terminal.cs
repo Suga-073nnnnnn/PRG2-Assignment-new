@@ -1,7 +1,7 @@
 ﻿//==========================================================
 // Student Number	: S10270022
 // Student Name	: Suganesan
-// Partner Name	: Gabriel Lee
+// Partner Name	: Gabriel Lee S10259250
 //==========================================================
 using System;
 using System.Collections.Generic;
