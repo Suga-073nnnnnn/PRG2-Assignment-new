@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
     class Airline
     {
@@ -19,20 +19,31 @@ namespace Assignment_Code
         public Dictionary<string, Flight> Flights { get; set; } = new Dictionary<string, Flight>();
 
 
-        public Airline(string code, string name)
+        public Airline(string code, string name, Dictionary<string, Flight> flight )
         {
             Code = code;
             Name = name;
+            Flights = flight;
         }
 
-        public void AddFlight(Flight flight)
+        public bool AddFlight(Flight flight)
         {
-            Flights[flight.flightNumber] = flight;
+            if (Flights.ContainsKey(flight.FlightNumber))
+            {
+                return false;
+            }
+            Flights.Add(flight.FlightNumber, flight);
+            return true;
         }
 
-        public void RemoveFlight(string flightNumber)
+        public bool RemoveFlight(Flight flight)
         {
-            Flights.Remove(flightNumber);
+            if (Flights.ContainsKey(flight.FlightNumber) == false)
+            {
+                return false;
+            }
+            Flights.Remove(flight.FlightNumber);
+            return true;
         }
 
         public double CalculateFees()       // Need to test with Flight classes(Gabriel) / in main to see if calculation works correctly

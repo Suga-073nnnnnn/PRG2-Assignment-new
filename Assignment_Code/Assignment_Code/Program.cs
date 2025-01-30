@@ -3,6 +3,8 @@
 // Student Name	: Suganesan
 // Partner Name	: Gabriel Lee
 //==========================================================
+using S10270022_PRG2Assignment;
+
 class Program
 {
     static void Main(string[] args)
