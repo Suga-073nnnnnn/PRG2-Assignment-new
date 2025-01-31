@@ -13,15 +13,15 @@ namespace S10270022_PRG2Assignment
 {
     class CFFTFlight : Flight
     {
-        public double RequestFees { get; set; }
-        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees):base(flightNumber,origin, destination, expectedTime, status)
+        public double RequestFee { get; set; }
+        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFee):base(flightNumber,origin, destination, expectedTime, status)
         {
-            RequestFees = requestFees;
+            RequestFee = 150;
         }
-        public override double CalculateFee()
+        public override double CalculateFees()
         {
-            //return base.CalculateFee() + RequestFees;
-            return RequestFees + 500 + 800;                 // arrive + leave + special code
+            return base.CalculateFees() + RequestFee;               // changed to return base function
+            //return RequestFees + 500 + 800;                
         }
         public override string ToString()
         {
