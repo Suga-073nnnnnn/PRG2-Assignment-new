@@ -18,9 +18,10 @@ namespace S10270022_PRG2Assignment
         {
             RequestFee = 300;
         }
-        public override double CalculateFee()
+        public override double CalculateFees()
         {
-            return 500 + 800 + RequestFee; //arrive + leave + special code
+            return base.CalculateFees() + RequestFee;               // changed to return base function
+            //return 500 + 800 + RequestFee; //arrive + leave + special code
         }
         public override string ToString()
         {
