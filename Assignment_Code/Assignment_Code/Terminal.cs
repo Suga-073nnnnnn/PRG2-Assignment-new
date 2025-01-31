@@ -52,13 +52,13 @@ namespace S10270022_PRG2Assignment
 
         public Airline GetAirlineFromFlight(Flight flight)
         {
-            if(!Airlines.ContainsKey(flight.FlightNumber))
-            {
+            if(!Airlines.ContainsKey(flight.FlightNumber))              // comment this part and use the below function if it doesnt work
+            {                                                                   //fix not tested
                 return null;
             }
             return Airlines[flight.FlightNumber];
 
-            /* foreach (var airline in Airlines.Values)
+            /* foreach (var airline in Airlines.Values)                     
              {
                  if (airline.Flights.ContainsKey(flight.flightNumber))
                  {
