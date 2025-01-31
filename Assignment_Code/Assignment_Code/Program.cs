@@ -11,10 +11,66 @@ class Program
     static void Main(string[] args)
     {
         string filePath = "flights.csv";
+        string filepath2 = "airlines.csv";
+        string filepath3 = "boardinggates.csv
         Dictionary<string, Flight> flights = LoadFlightsFromCsv(filePath);
+        Dictionary<string, Airline> AirlineDict = LoadAirlineFromCSV(filepath2);
+        Dictionary<string, BoardingGate> GateDict = LoadGateFromCSV(filepath3);
 
-        DisplayFlightInformation(flights);
+        //formating start
+        bool eaweaw = true;
+        while (eaweaw = true)
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Welcome to Changi Airport Terminal 5");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("1. List All Flights");
+            Console.WriteLine("2. List Boarding Gates");
+            Console.WriteLine("3. Assign a Boarding Gate to a Flight");
+            Console.WriteLine("4. Create Flight");
+            Console.WriteLine("5. Display Airline Flights");
+            Console.WriteLine("6. Modify Flight Details");
+            Console.WriteLine("7. Display Flight Schedule");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine();
+            Console.WriteLine("Please select your option: ");
+            int option = Convert.ToInt32(Console.ReadLine());
+            if (option == 1)
+            {
+                //part 3
+            }
+            else if (option == 2)
+            {
+                ListBoardingGate(GateDict);
+            }
+            else if (option == 3)
+            {
+                //part 5
+            }
+            else if (option == 4)
+            {
+                //part 6
+            }
+            else if (option == 5)
+            {
+                DisplayFlightInformation(flights);
+            }
+            else if (option == 6)
+            {
+                modification(flights);
+            }
+            else if (option == 7)
+            {
+                //part 9
+            }
+            else if (option == 0)
+            {
+                eaweaw = false;
+                break;
+            }
+        }
     }
+
 
     static Dictionary<string, Flight> LoadFlightsFromCsv(string filePath)
     {
@@ -85,7 +141,7 @@ class Program
 <<<<<<< HEAD
     //Gabriel's 
     //load files for airline 
-    Dictionary<Airline> AirlineDict = new Dictionary<Airline>;
+    Dictionary<string, Airline> AirlineDict = new Dictionary<string, Airline>;
     static Dictionary<string, Airline> LoadAirlineFromCSV(string filename)
     {
         var airlines = new Dictionary<string, Airline>();
@@ -96,6 +152,7 @@ class Program
             string Name = fields[0].Trim();
             string Code = fields[1].Trim();
         }
+        
     }
     //load files for boarding gate
     static Dictionary<string, BoardingGate> LoadGateFromCSV(string filename)
@@ -112,25 +169,25 @@ class Program
         }
     }
     //listing boarding gates
-    static ListBoardingGate(Dictionary<string, BoardingGate> gateDict)
+    static void ListBoardingGate(Dictionary<string, BoardingGate> gateDict)
     {
         Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", "Flight No.", "DDJB", "CFFT", "LWTT");
         foreach (var gate in gateDict.Values)
         {
             if (gate == null) continue;
-            Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", gate.Gate, gate.SupportsDDJB, gate.SupportsCFFT, gate.SupportsLWTT);
+            Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", gate.GateName, gate.SupportsDDJB, gate.SupportsCFFT, gate.SupportsLWT);
         }
     }
     //modifying flight details
     static void modification(Dictionary<string, Flight> flights)
     {
-        DisplayFlightInformation(Dictionary<string, Flight> flights);
+        DisplayFlightInformation(flights);
         Console.Write("Enter a 2-Letter Airline Code:");
         string inputcode = Console.ReadLine();
         foreach (var flight in flights.Values)
         {
-            if (inputcode in flight.FlightNumber) 
-        {
+            if (inputcode == flight.FlightNumber) 
+            { 
                 string specialRequest = GetSpecialRequestCode(flight);
                 Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}",
                     flight.FlightNumber,
@@ -155,25 +212,22 @@ class Program
             int option1 = Convert.ToInt32(Console.ReadLine());
             foreach (var flight in flights.Values)
             {
-                if (flight.Flight = inputNum)
+                if (flight.FlightNumber == inputNum)
                 {
                     if (option1 == 1)
                     {
                         Console.Write("Enter New Origin:");
-                        string newe = Console.ReadLine();
-                        flights[flight.Origin] = newe;
+                        flight.Origin = Console.ReadLine();
                     }
                     if (option1 == 2)
                     {
                         Console.Write("Enter new Destination:");
-                        string newe = Console.ReadLine();
-                        flights[flight.Destination] = newe;
+                        flight.Destination = Console.ReadLine();
                     }
                     if (option1 == 3)
                     {
                         Console.Write("Enter new Expected Departure/Arrival:");
-                        string newe = Console.ReadLine();
-                        flights[flight.ExpectedTime] = newe;
+                        flight.ExpectedTime = Convert.ToDateTime(Console.ReadLine());
                     }
                     if (option1 == 4)
                     {
@@ -191,14 +245,30 @@ class Program
             string delete = Console.ReadLine();
             foreach (var flight in flights.Values)
             {
-                if (flight.FlightNumber = delete)
+                Console.WriteLine("[Y] Yes");
+                Console.WriteLine("[N] No");
+                Console.WriteLine("Are you sure?");
+                string input = Console.ReadLine();
+                if (input == "Y")
                 {
-                    flight.Delete();
-                    Console.WriteLine("Deletion Complete");
+                    if (flight.FlightNumber == delete)
+                    {
+                        bool isRemoved = flights.Remove(delete);
+                        if (isRemoved)
+                        {
+                            Console.WriteLine("Deletion Complete");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Flight not found");
+                        }
+
+                    }
                 }
+                else { Console.WriteLine("ok"); }
             }
         }
-        DisplayFlightInformation(Dictionary<string, Flight>flights);
+        DisplayFlightInformation(flights);
     }
 =======
 >>>>>>> 47c2373d0f2ad76b59b81c630801e4ddec9c8bf6
