@@ -3,6 +3,8 @@
 // Student Name	: Suganesan
 // Partner Name	: Gabriel Lee S10259250
 //==========================================================
+using Assignment_Code;
+
 class Program
 {
     static void Main(string[] args)
@@ -52,7 +54,7 @@ class Program
     static void DisplayFlightInformation(Dictionary<string, Flight> flights)
     {
         Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
-            "Flight No.", "Origin", "Destination", "Expected Time", "Special Request");
+            "Flight Number", "Airline Name", "Origin", "Destination", "Expected Time Departure/Arrival Time");
         Console.WriteLine(new string('-', 87));
 
         foreach (var flight in flights.Values)
@@ -60,10 +62,10 @@ class Program
             string specialRequest = GetSpecialRequestCode(flight);
             Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
                 flight.FlightNumber,
+                Airline.Name(flights),
                 flight.Origin,
                 flight.Destination,
-                flight.ExpectedTime.ToString("hh:mm tt"),
-                specialRequest);
+                flight.ExpectedTime.ToString("hh:mm tt"));
         }
     }
 
@@ -78,6 +80,7 @@ class Program
         };
     }
     //Gabriel's 
+    //load files for airline 
     Dictionary<Airline> AirlineDict = new Dictionary<Airline>;
     static Dictionary<string, Airline> LoadAirlineFromCSV(string filename)
     {
@@ -90,6 +93,7 @@ class Program
             string Code = fields[1].Trim();
         }
     }
+    //load files for boarding gate
     static Dictionary<string, BoardingGate> LoadGateFromCSV(string filename)
     {
         var gates = new Dictionary<string, BoardingGate>();
@@ -100,19 +104,20 @@ class Program
             string Gate = fields[0].Trim();
             bool SupportsDDJB = Convert.ToBoolean(fields[1].Trim());
             bool SupportsCFFT = Convert.ToBoolean(fields[2].Trim());
-            bool SupportsLWWT = Convert.ToBoolean(fields[3].Trim());
+            bool SupportsLWTT = Convert.ToBoolean(fields[3].Trim());
         }
     }
+    //listing boarding gates
     static ListBoardingGate(Dictionary<string, BoardingGate> gateDict)
     {
         Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", "Flight No.", "DDJB", "CFFT", "LWTT");
         foreach (var gate in gateDict.Values)
         {
             if (gate == null) continue;
-            Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", gate.Gate, gate.SupportsDDJB, gate.SupportsCFFT, gate.Supports.LWTT);
+            Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", gate.Gate, gate.SupportsDDJB, gate.SupportsCFFT, gate.SupportsLWTT);
         }
     }
-
+    //modifying flight details
     static void modification(Dictionary<string, Flight> flights)
     {
         DisplayFlightInformation(Dictionary<string, Flight> flights);
@@ -120,7 +125,7 @@ class Program
         string inputcode = Console.ReadLine();
         foreach (var flight in flights.Values)
         {
-            if (inputcode in flight.FlightNumber) //idk :cry:
+            if (inputcode in flight.FlightNumber) 
         {
                 string specialRequest = GetSpecialRequestCode(flight);
                 Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}",
@@ -133,6 +138,7 @@ class Program
         Console.WriteLine("[2] Choose an existing flight to delete");
         Console.Write("Choose an option: ");
         int option = Convert.ToInt32(Console.ReadLine());
+        //modify
         if (option == 1)
         {
             Console.Write("Choose a flght number");
@@ -174,6 +180,7 @@ class Program
                 }
             }
         }
+        //delete
         if (option == 2)
         {
             Console.Write("Enter a flight number to delete:");

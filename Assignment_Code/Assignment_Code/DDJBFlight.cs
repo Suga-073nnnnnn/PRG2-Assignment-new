@@ -24,7 +24,7 @@ namespace Assignment_Code
         }
         public override string ToString()
         {
-            return base.ToString();
+            return base.ToString() + "Special Request Code: DDJB";
         }
     }
 }
