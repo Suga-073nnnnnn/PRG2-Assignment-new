@@ -31,7 +31,7 @@ namespace S10270022_PRG2Assignment
             Status = "On Time";            //I think its supposed to be "On Time" by default
         }
 
-        public virtual double CalculateFee()
+        public virtual double CalculateFees()
         {
             double fee = 300; //boarding fee 
             if (Destination == "SIN")
