@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
-    public class LWTTFlight: flight
+    class LWTTFlight: Flight
     {
         public double RequestFee { get; set; }
         public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees) : base(flightNumber, origin, destination, expectedTime, status)
@@ -20,7 +20,7 @@ namespace Assignment_Code
         }
         public override double CalculateFee()
         {
-            return 500 + 800 + 300 + RequestFee;
+            return 500 + 800 + RequestFee; //arrive + leave + special code
         }
         public override string ToString()
         {

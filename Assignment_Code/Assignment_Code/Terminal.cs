@@ -9,56 +9,70 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
     class Terminal
     {
         public string TerminalName { get; set; }
-        public Dictionary<string, Airline> Airlines { get; set; }
-        public Dictionary<string, flight> Flights { get; set; }
-        public Dictionary<string, BoardingGate> BoardingGates { get; set; }
-        public Dictionary<string, double> GateFees { get; set; }
+        public Dictionary<string, Airline> Airlines { get; set; } = new Dictionary<string, Airline>();
+        public Dictionary<string, Flight> Flights { get; set; } = new Dictionary<string, Flight>();
+        public Dictionary<string, BoardingGate> BoardingGates { get; set; } = new Dictionary<string, BoardingGate>();
+        public Dictionary<string, double> GateFees { get; set; } = new Dictionary<string, double>();
 
-        public Terminal(string terminalName)
+        public Terminal(string terminalName, Dictionary<string, Airline> airline, Dictionary<string, Flight> flight, Dictionary<string, BoardingGate> boardingGate, Dictionary<string, double> gateFees)
         {
             TerminalName = terminalName;
-            BoardingGates = new Dictionary<string, BoardingGate>();
-            Airlines = new Dictionary<string, Airline>();
-            Flights = new Dictionary<string, flight>();
-            GateFees = new Dictionary<string, double>();
+            Airlines = airline;
+            Flights = flight;
+            BoardingGates = boardingGate;
+            GateFees = gateFees;
         }
 
 
-        public void AddAirline(Airline airline)
+        public bool AddAirline(Airline airline)
         {
-            Airlines[airline.AirlineCode] = airline;
-            return true;
-        }
-
-
-        public void AddBoardingGate(BoardingGate gate)
-        {
-            BoardingGates[gate.GateName] = gate;
-            return true;
-        }
-
-        public Airline GetAirlineFromFlight(flight flight)
-        {
-            foreach (var airline in Airlines.Values)
+            if (Airlines.ContainsKey(airline.Code))
             {
-                if (airline.Flights.ContainsKey(flight.flightNumber))
-                {
-                    return airline;
-                }
+                return false;
             }
-            return null; // if flight not found
+            Airlines.Add(airline.Code, airline);
+            return true;
+        }
+
+
+        public bool AddBoardingGate(BoardingGate boardingGate)
+        {
+            if (BoardingGates.ContainsKey(boardingGate.GateName))
+            {
+                return false;
+            }
+            BoardingGates.Add(boardingGate.GateName, boardingGate);
+            return true;
+        }
+
+        public Airline GetAirlineFromFlight(Flight flight)
+        {
+            if(!Airlines.ContainsKey(flight.FlightNumber))
+            {
+                return null;
+            }
+            return Airlines[flight.FlightNumber];
+
+            /* foreach (var airline in Airlines.Values)
+             {
+                 if (airline.Flights.ContainsKey(flight.flightNumber))
+                 {
+                     return airline;
+                 }
+             }
+             return null;*/
         }
 
         public void PrintAirlineFees()
         {
-            foreach (var airline in Airlines.Values)
+            foreach (KeyValuePair<string, double> fee in GateFees)
             {
-                Console.WriteLine($"{airline.Name} Fees: {airline.CalculateFees():C}");  // temp formatting * edit when testing program
+                Console.WriteLine(fee.Key+"\t"+fee.Value);  // temp formatting * edit when testing program
             }
         }
 

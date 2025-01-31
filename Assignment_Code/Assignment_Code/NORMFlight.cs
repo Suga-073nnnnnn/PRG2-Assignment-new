@@ -10,14 +10,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
-    public class NORMFlight: flight
+    public class NORMFlight: Flight
     {
+        public NORMFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status)
+        {
+        }
+
         public override double CalculateFee()
         {
-            return 500 + 800 + 300;
+            double fee = base.CalculateFee();
+            return fee;
         }
+
         public override string ToString()
         {
             return base.ToString();

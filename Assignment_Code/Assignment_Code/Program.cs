@@ -3,7 +3,8 @@
 // Student Name	: Suganesan
 // Partner Name	: Gabriel Lee S10259250
 //==========================================================
-using Assignment_Code;
+using S10270022_PRG2Assignment;
+//>>>>>>> 47c2373d0f2ad76b59b81c630801e4ddec9c8bf6
 
 class Program
 {
@@ -79,6 +80,9 @@ class Program
             _ => "NORM"
         };
     }
+
+
+<<<<<<< HEAD
     //Gabriel's 
     //load files for airline 
     Dictionary<Airline> AirlineDict = new Dictionary<Airline>;
@@ -196,4 +200,6 @@ class Program
         }
         DisplayFlightInformation(Dictionary<string, Flight>flights);
     }
+=======
+>>>>>>> 47c2373d0f2ad76b59b81c630801e4ddec9c8bf6
 }

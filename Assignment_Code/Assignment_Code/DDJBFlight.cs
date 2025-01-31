@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
     public class DDJBFlight : Flight
     {
@@ -20,7 +20,7 @@ namespace Assignment_Code
         }
         public override double CalculateFee()
         {
-            return 500 + 800 + 300 + RequestFee;
+            return 500 + 800 + RequestFee; //arrive + leave + special code
         }
         public override string ToString()
         {

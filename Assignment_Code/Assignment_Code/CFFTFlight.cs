@@ -9,18 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
-    public class CFFTFlight : Flight
+    class CFFTFlight : Flight
     {
-        public double RequestFees {  get; set; }
+        public double RequestFees { get; set; }
         public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFees):base(flightNumber,origin, destination, expectedTime, status)
         {
-            RequestFees = 150;
+            RequestFees = requestFees;
         }
         public override double CalculateFee()
         {
-            return base.CalculateFee() + RequestFees;
+            //return base.CalculateFee() + RequestFees;
+            return RequestFees + 500 + 800;                 // arrive + leave + special code
         }
         public override string ToString()
         {

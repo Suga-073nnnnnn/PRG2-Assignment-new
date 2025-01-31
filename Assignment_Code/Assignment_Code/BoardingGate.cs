@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment_Code
+namespace S10270022_PRG2Assignment
 {
     class BoardingGate
     {
@@ -17,27 +17,29 @@ namespace Assignment_Code
         public bool SupportsCFFT { get; set; }
         public bool SupportsDDJB { get; set; }
         public bool SupportsLWT { get; set; }
-        public flight Flight { get; set; }
+        public Flight Flight { get; set; }
 
-        public BoardingGate(string gateName, bool supportsCFFT, bool supportsDDJB, bool supportsLWT)
+        public BoardingGate(string gateName, bool supportsCFFT, bool supportsDDJB, bool supportsLWT, Flight flight)
         {
             GateName = gateName;
             SupportsCFFT = supportsCFFT;
             SupportsDDJB = supportsDDJB;
             SupportsLWT = supportsLWT;
-            Flight = null; //not sure, might change later, temp value (remove when decided/confirmed)
+            Flight = flight;         //not sure, might change later, temp value (remove when decided/confirmed)
         }
 
         public double CalculateFees()
         {
-            if (Flight != null)     //Thinking of possibility to check if null in main before calling instead. *Need to discuss
+            double fee = 300;
+            return fee;
+            /*if (Flight != null)     //Thinking of possibility to check if null in main before calling instead. *Need to discuss
             {
                 return Flight.CalculateFee();
             }
             else
             {
                 return 0.0;
-            }
+            }*/
         }
 
         public override string ToString()       //Should be override. *Need to confirm with Gabriel but should work as intended.
