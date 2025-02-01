@@ -108,7 +108,7 @@ class Program
         };
     }
 
-    static void DisplayFlightInformation(Dictionary<string, Flight> flights)
+    static void DisplayFlightInformation(Dictionary<string, Flight> flights,Dictionary<string, Airline>airlines)
     {
         Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
             "Flight Number", "Airline Name", "Origin", "Destination", "Expected Time Departure/Arrival Time");
@@ -116,13 +116,16 @@ class Program
 
         foreach (var flight in flights.Values)
         {
-            string specialRequest = GetSpecialRequestCode(flight);
-            Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
-                flight.FlightNumber,
-                Airline.Name(flights),
-                flight.Origin,
-                flight.Destination,
-                flight.ExpectedTime.ToString("hh:mm tt"));
+            foreach (var airline in airlines.Values)
+            {
+                string specialRequest = GetSpecialRequestCode(flight);
+                Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
+                    flight.FlightNumber,
+                    airlines.Name,
+                    flight.Origin,
+                    flight.Destination,
+                    flight.ExpectedTime.ToString("hh:mm tt"));
+            }
         }
     }
 
@@ -141,7 +144,6 @@ class Program
 <<<<<<< HEAD
     //Gabriel's 
     //load files for airline 
-    Dictionary<string, Airline> AirlineDict = new Dictionary<string, Airline>;
     static Dictionary<string, Airline> LoadAirlineFromCSV(string filename)
     {
         var airlines = new Dictionary<string, Airline>();
@@ -152,7 +154,7 @@ class Program
             string Name = fields[0].Trim();
             string Code = fields[1].Trim();
         }
-        
+        return airlines;
     }
     //load files for boarding gate
     static Dictionary<string, BoardingGate> LoadGateFromCSV(string filename)
@@ -167,6 +169,7 @@ class Program
             bool SupportsCFFT = Convert.ToBoolean(fields[2].Trim());
             bool SupportsLWTT = Convert.ToBoolean(fields[3].Trim());
         }
+        return gates;
     }
     //listing boarding gates
     static void ListBoardingGate(Dictionary<string, BoardingGate> gateDict)
@@ -179,9 +182,9 @@ class Program
         }
     }
     //modifying flight details
-    static void modification(Dictionary<string, Flight> flights)
+    static void modification(Dictionary<string, Flight> flights,Dictionary<string,Airline>airlines)
     {
-        DisplayFlightInformation(flights);
+        DisplayFlightInformation(flights,airlines);
         Console.Write("Enter a 2-Letter Airline Code:");
         string inputcode = Console.ReadLine();
         foreach (var flight in flights.Values)
@@ -268,7 +271,28 @@ class Program
                 else { Console.WriteLine("ok"); }
             }
         }
-        DisplayFlightInformation(flights);
+        
+    }
+    //advance feature attempt (a)
+    static void ProcessUnasignBulk(Dictionary<string, BoardingGate> gateDict)
+    {
+        //for each boarding gate
+        Queue<string> queue = new Queue<string>();
+        
+        foreach (var gate in gateDict.Values)
+        {
+            if (gate.Flight == null)
+            {
+                queue.Enqueue(gate.GateName);
+            }
+        }
+        Console.WriteLine("The total number of Boarding Gates that do not have a flight number assigned "+queue.Count);
+
+        //for each flight 
+
+        //dequeueing
+
+
     }
 =======
 >>>>>>> 47c2373d0f2ad76b59b81c630801e4ddec9c8bf6
