@@ -10,15 +10,24 @@ class Program
 
     static Terminal terminal;
 
+    //Program Start
     static void Main(string[] args)
     {
         LoadData();
         DisplayMenu();
     }
 
+            /*Might have to uodate entire code if found a way to call the 
+            terminal object from the class instead of creating a new onject here
+            *remove this line if done*/
+
+
+    // Basic Feature 1 and 2 - Load Data
     static void LoadData()
     {
         Console.WriteLine("Loading Airlines...");
+
+        // Slightly redundent to create a new terminal object here but idk how else to do it for now.
         terminal = new Terminal("Changi Airport Terminal 5", new Dictionary<string, Airline>(), new Dictionary<string, Flight>(), new Dictionary<string, BoardingGate>(), new Dictionary<string, double>());
 
         foreach (var line in File.ReadLines("airlines.csv").Skip(1))
@@ -71,6 +80,8 @@ class Program
         Console.WriteLine($"{terminal.Flights.Count} Flights Loaded!");
     }
 
+
+    // Main Program Menu Loop
     static void DisplayMenu()
     {
         while (true)
@@ -99,10 +110,10 @@ class Program
                     //ListBoardingGates();
                     break;
                 case "3":
-                    //AssignBoardingGate();
+                    AssignBoardingGate();
                     break;
                 case "4":
-                    //CreateFlight();
+                    CreateFlight();
                     break;
                 case "5":
                     //DisplayAirlineFlights();
@@ -124,7 +135,7 @@ class Program
     }
 
 
-    // Basic Feature 2
+    // Basic Feature 3 - List All Flights
     static void ListAllFlights()
     {
         Console.WriteLine("=============================================");
@@ -140,8 +151,96 @@ class Program
     }
 
 
+    // Basic Feature 5 - Assign Boarding Gate to Flight
+
+    static void AssignBoardingGate()
+    {
+        Console.WriteLine("=============================================");
+        Console.WriteLine("Assign a Boarding Gate to a Flight");
+        Console.WriteLine("=============================================");
+
+        Console.Write("Enter Flight Number: ");
+        string flightNumber = Console.ReadLine();
+
+        if (terminal.Flights.TryGetValue(flightNumber, out Flight flight))
+        {
+            Console.Write("Enter Boarding Gate Name: ");
+            string gateName = Console.ReadLine();
+
+            if (terminal.BoardingGates.TryGetValue(gateName, out BoardingGate gate) && gate.Flight == null)
+            {
+                gate.Flight = flight;
+
+                Console.Write("Would you like to update the status of the flight? (Y/N): ");
+                if (Console.ReadLine().ToUpper() == "Y")
+                {
+                    Console.WriteLine("1. Delayed\n2. Boarding\n3. On Time");
+                    Console.Write("Please select the new status of the flight: ");
+                    switch (Console.ReadLine())
+                    {
+                        case "1": flight.Status = "Delayed"; break;
+                        case "2": flight.Status = "Boarding"; break;
+                        case "3": flight.Status = "On Time"; break;
+                    }
+                }
+                Console.WriteLine($"Flight {flight.FlightNumber} has been assigned to Boarding Gate {gate.GateName}!");
+            }
+            else
+            {
+                Console.WriteLine("Boarding Gate is already assigned or doesn't exist.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Flight not found.");
+        }
+    }
 
 
+    // Basic Feature 6 - Create new Flight             *  Loop to prompt user to ask if want to add again is not implemented yet
+                                                     //    * After Creating new flight, Airline Name not shown  - due to the getting airline name code being only in the loading data part. 
+                                                       //     remove when done / errorfix 
+    static void CreateFlight()
+    {
+        Console.Write("Enter Flight Number: ");
+        string flightNumber = Console.ReadLine();
+
+        Console.Write("Enter Origin: ");
+        string origin = Console.ReadLine();
+
+        Console.Write("Enter Destination: ");
+        string destination = Console.ReadLine();
+
+        Console.Write("Enter Expected Departure/Arrival Time (dd/MM/yyyy HH:mm): ");
+        DateTime expectedTime;
+        while (!DateTime.TryParse(Console.ReadLine(), out expectedTime))
+        {
+            Console.Write("Invalid date format. Please re-enter: ");
+        }
+
+        Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
+        string specialRequest = Console.ReadLine().ToUpper();
+
+        Flight newFlight;
+        switch (specialRequest)
+        {
+            case "DDJB":
+                newFlight = new DDJBFlight(flightNumber, origin, destination, expectedTime, "On Time", 300);
+                break;
+            case "CFFT":
+                newFlight = new CFFTFlight(flightNumber, origin, destination, expectedTime, "On Time", 150);
+                break;
+            case "LWTT":
+                newFlight = new LWTTFlight(flightNumber, origin, destination, expectedTime, "On Time", 500);
+                break;
+            default:
+                newFlight = new NORMFlight(flightNumber, origin, destination, expectedTime, "On Time");
+                break;
+        }
+
+        terminal.Flights.Add(newFlight.FlightNumber, newFlight);
+        Console.WriteLine($"Flight {newFlight.FlightNumber} has been added!");
+    }
 
 
 
