@@ -7,76 +7,146 @@ using S10270022_PRG2Assignment;
 
 class Program
 {
+
+    static Terminal terminal;
+
     static void Main(string[] args)
     {
-        string filePath = "flights.csv";
-        Dictionary<string, Flight> flights = LoadFlightsFromCsv(filePath);
-
-        DisplayFlightInformation(flights);
+        LoadData();
+        DisplayMenu();
     }
 
-    static Dictionary<string, Flight> LoadFlightsFromCsv(string filePath)
+    static void LoadData()
     {
-        var flights = new Dictionary<string, Flight>();
+        Console.WriteLine("Loading Airlines...");
+        terminal = new Terminal("Changi Airport Terminal 5", new Dictionary<string, Airline>(), new Dictionary<string, Flight>(), new Dictionary<string, BoardingGate>(), new Dictionary<string, double>());
 
-        var lines = File.ReadAllLines(filePath);
-        foreach (var line in lines.Skip(1)) // Skip header line
+        foreach (var line in File.ReadLines("airlines.csv").Skip(1))
         {
-            var fields = line.Split(',');
-
-            if (fields.Length != 5)
-                throw new FormatException("CSV file format is incorrect.");
-
-            string flightNumber = fields[0].Trim();
-            string origin = fields[1].Trim();
-            string destination = fields[2].Trim();
-            DateTime expectedTime = DateTime.Parse(fields[3].Trim());
-            string specialRequestCode = fields[4].Trim();
-
-            Flight newFlight = CreateFlightInstance(flightNumber, origin, destination, expectedTime, specialRequestCode);
-            flights[flightNumber] = newFlight;
+            var parts = line.Split(',');
+            var airline = new Airline(parts[1], parts[0], new Dictionary<string, Flight>());
+            terminal.AddAirline(airline);
         }
+        Console.WriteLine($"{terminal.Airlines.Count} Airlines Loaded!");
 
-        return flights;
+        Console.WriteLine("Loading Boarding Gates...");
+        foreach (var line in File.ReadLines("boardinggates.csv").Skip(1))
+        {
+            var parts = line.Split(',');
+            var gate = new BoardingGate(parts[0], bool.Parse(parts[1]), bool.Parse(parts[2]), bool.Parse(parts[3]), null);
+            terminal.AddBoardingGate(gate);
+        }
+        Console.WriteLine($"{terminal.BoardingGates.Count} Boarding Gates Loaded!");
+
+        Console.WriteLine("Loading Flights...");
+        foreach (var line in File.ReadLines("flights.csv").Skip(1))
+        {
+            var parts = line.Split(',');
+            DateTime expectedTime = DateTime.Parse(parts[3]);
+            Flight flight;
+
+            switch (parts[4])
+            {
+                case "DDJB":
+                    flight = new DDJBFlight(parts[0], parts[1], parts[2], expectedTime, "On Time", 300);
+                    break;
+                case "CFFT":
+                    flight = new CFFTFlight(parts[0], parts[1], parts[2], expectedTime, "On Time", 150);
+                    break;
+                case "LWTT":
+                    flight = new LWTTFlight(parts[0], parts[1], parts[2], expectedTime, "On Time", 500);
+                    break;
+                default:
+                    flight = new NORMFlight(parts[0], parts[1], parts[2], expectedTime, "On Time");
+                    break;
+            }
+
+            terminal.Flights.Add(flight.FlightNumber, flight);
+            var airlineCode = parts[0].Split(' ')[0];
+            if (terminal.Airlines.ContainsKey(airlineCode))
+            {
+                terminal.Airlines[airlineCode].AddFlight(flight);
+            }
+        }
+        Console.WriteLine($"{terminal.Flights.Count} Flights Loaded!");
     }
 
-    static Flight CreateFlightInstance(string flightNumber, string origin, string destination, DateTime expectedTime, string specialRequestCode)
+    static void DisplayMenu()
     {
-        return specialRequestCode switch
+        while (true)
         {
-            "CFFT" => new CFFTFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 150),
-            "DDJB" => new DDJBFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 300),
-            "LWTT" => new LWTTFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 500),
-            _ => new NORMFlight(flightNumber, origin, destination, expectedTime, "Scheduled")
-        };
-    }
+            Console.WriteLine("\n=============================================");
+            Console.WriteLine("Welcome to Changi Airport Terminal 5");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("1. List All Flights");
+            Console.WriteLine("2. List Boarding Gates");
+            Console.WriteLine("3. Assign a Boarding Gate to a Flight");
+            Console.WriteLine("4. Create Flight");
+            Console.WriteLine("5. Display Airline Flights");
+            Console.WriteLine("6. Modify Flight Details");
+            Console.WriteLine("7. Display Flight Schedule");
+            Console.WriteLine("0. Exit");
 
-    static void DisplayFlightInformation(Dictionary<string, Flight> flights)
-    {
-        Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
-            "Flight No.", "Origin", "Destination", "Expected Time", "Special Request");
-        Console.WriteLine(new string('-', 87));
+            Console.Write("Please select your option: ");
+            string option = Console.ReadLine();
 
-        foreach (var flight in flights.Values)
-        {
-            string specialRequest = GetSpecialRequestCode(flight);
-            Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
-                flight.FlightNumber,
-                flight.Origin,
-                flight.Destination,
-                flight.ExpectedTime.ToString("hh:mm tt"),
-                specialRequest);
+            switch (option)
+            {
+                case "1":
+                    ListAllFlights();
+                    break;
+                case "2":
+                    //ListBoardingGates();
+                    break;
+                case "3":
+                    //AssignBoardingGate();
+                    break;
+                case "4":
+                    //CreateFlight();
+                    break;
+                case "5":
+                    //DisplayAirlineFlights();
+                    break;
+                case "6":
+                    //ModifyFlightDetails();
+                    break;
+                case "7":
+                    //DisplayFlightSchedule();
+                    break;
+                case "0":
+                    Console.WriteLine("Goodbye!");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
         }
     }
 
-    static string GetSpecialRequestCode(Flight flight)
+
+    // Basic Feature 2
+    static void ListAllFlights()
     {
-        return flight switch
+        Console.WriteLine("=============================================");
+        Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+        Console.WriteLine("=============================================");
+
+        Console.WriteLine("Flight Number   Airline Name           Origin                 Destination            Expected Time");
+        foreach (var flight in terminal.Flights.Values)
         {
-            CFFTFlight => "CFFT",
-            DDJBFlight => "DDJB",
-            LWTTFlight => "LWTT",
-            _ => "NORM"
-        };
+            var airline = terminal.GetAirlineFromFlight(flight);
+            Console.WriteLine($"{flight.FlightNumber,-15}{airline?.Name,-20}{flight.Origin,-22}{flight.Destination,-22}{flight.ExpectedTime}");
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
 }
