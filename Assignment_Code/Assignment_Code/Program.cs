@@ -12,7 +12,7 @@ class Program
     {
         string filePath = "flights.csv";
         string filepath2 = "airlines.csv";
-        string filepath3 = "boardinggates.csv
+        string filepath3 = "boardinggates.csv";
         Dictionary<string, Flight> flights = LoadFlightsFromCsv(filePath);
         Dictionary<string, Airline> AirlineDict = LoadAirlineFromCSV(filepath2);
         Dictionary<string, BoardingGate> GateDict = LoadGateFromCSV(filepath3);
@@ -53,11 +53,11 @@ class Program
             }
             else if (option == 5)
             {
-                DisplayFlightInformation(flights);
+                DisplayFlightInformation(flights,AirlineDict);
             }
             else if (option == 6)
             {
-                modification(flights);
+                modification(flights,AirlineDict);
             }
             else if (option == 7)
             {
@@ -108,6 +108,7 @@ class Program
         };
     }
 
+    //part 7
     static void DisplayFlightInformation(Dictionary<string, Flight> flights,Dictionary<string, Airline>airlines)
     {
         Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
@@ -121,7 +122,7 @@ class Program
                 string specialRequest = GetSpecialRequestCode(flight);
                 Console.WriteLine("{0,-12}{1,-20}{2,-20}{3,-20}{4,-25}",
                     flight.FlightNumber,
-                    airlines.Name,
+                    airline.Name,
                     flight.Origin,
                     flight.Destination,
                     flight.ExpectedTime.ToString("hh:mm tt"));
@@ -172,13 +173,17 @@ class Program
         return gates;
     }
     //listing boarding gates
-    static void ListBoardingGate(Dictionary<string, BoardingGate> gateDict)
+    static void ListBoardingGate(Dictionary<string, BoardingGate> gateDict,Dictionary<string, Flight>flights)
     {
         Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", "Flight No.", "DDJB", "CFFT", "LWTT");
         foreach (var gate in gateDict.Values)
         {
-            if (gate == null) continue;
-            Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", gate.GateName, gate.SupportsDDJB, gate.SupportsCFFT, gate.SupportsLWT);
+            foreach (var flight in flights.Values)
+            {
+                if (gate == null) continue;
+                Console.WriteLine($"{0,20} {1,10} {1,10} {1,10}", flight.FlightNumber, gate.SupportsDDJB, gate.SupportsCFFT, gate.SupportsLWT);
+
+            }
         }
     }
     //modifying flight details
@@ -274,24 +279,43 @@ class Program
         
     }
     //advance feature attempt (a)
-    static void ProcessUnasignBulk(Dictionary<string, BoardingGate> gateDict)
+    static void ProcessUnasignBulk(Dictionary<string, BoardingGate> gateDict,Dictionary<string, Flight> flights)
     {
-        //for each boarding gate
-        Queue<string> queue = new Queue<string>();
-        
-        foreach (var gate in gateDict.Values)
+        //for each flight 
+        Queue<string> queue1 = new Queue<string>();
+        foreach (var flight in flights.Values)
         {
-            if (gate.Flight == null)
+            foreach (var gate in gateDict.Values)
             {
-                queue.Enqueue(gate.GateName);
+                if (gate == null)
+                {
+                    queue1.Enqueue(flight.FlightNumber);
+                }
             }
         }
-        Console.WriteLine("The total number of Boarding Gates that do not have a flight number assigned "+queue.Count);
+        Console.WriteLine("The total number of Flights that do not have a boarding gates assigned is  " + queue1.Count);
 
-        //for each flight 
+        //for each boarding gate
+        Queue<string> queue = new Queue<string>();
+
+        foreach (var flight in flights.Values)
+        {
+            foreach (var gate in gateDict.Values)
+            {
+                if (gate.Flight == null)
+                {
+                    queue.Enqueue(flight.FlightNumber);
+                }
+            }
+        }
+        Console.WriteLine("The total number of Boarding Gates that do not have a flight number assigned is "+queue.Count);
 
         //dequeueing
-
+        foreach (var e in queue)
+        {
+            queue.Dequeue();
+            
+        }
 
     }
 =======
