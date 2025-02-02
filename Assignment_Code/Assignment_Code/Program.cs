@@ -365,6 +365,8 @@ class Program
             Console.WriteLine($"=============================================");
             Console.WriteLine($"List of Flights for {airlineFound.Name}");
             Console.WriteLine($"=============================================");
+            Console.WriteLine(string.Format("{0,-15}{1,-20}{2,-22}{3,-22}{4,-20}",
+            "Flight Number", "Airline Name", "Origin", "Destination", "Expected Time"));
 
             foreach (var flight in airlineFound.Flights.Values)
             {
@@ -399,9 +401,11 @@ class Program
         if (terminal.Airlines.TryGetValue(airlineCode, out Airline airline))
         {
             Console.WriteLine($"\nList of Flights for {airline.Name}");
+            Console.WriteLine(string.Format("{0,-15}{1,-20}{2,-22}{3,-22}{4,-20}",
+            "Flight Number", "Airline Name", "Origin", "Destination", "Expected Time"));
             foreach (var mflight in airline.Flights.Values)
             {
-                Console.WriteLine($"{mflight.FlightNumber} - {mflight.Origin} to {mflight.Destination} at {mflight.ExpectedTime}");
+                Console.WriteLine($"{mflight.FlightNumber,-15}{airline.Name,-20}{mflight.Origin,-22}{mflight.Destination,-22}{mflight.ExpectedTime}");
             }
 
             Console.Write("\nChoose an existing Flight to modify or delete: ");
