@@ -50,6 +50,11 @@ namespace S10270022_PRG2Assignment
             SupportsDDJB,
             SupportsCFFT,
             SupportsLWT);
+
+            /*string flightInfo = Flight != null ? Flight.FlightNumber : "Unassigned";              //Use this if want to do validation here instead of in main
+            return string.Format("{0,-14}{1,-18}{2,-18}{3,-18}{4,-10}",
+                GateName, SupportsDDJB, SupportsCFFT, SupportsLWT, flightInfo);*/
+
         }
     }
 }
