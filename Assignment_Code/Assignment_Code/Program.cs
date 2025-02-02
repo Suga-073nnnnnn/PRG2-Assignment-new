@@ -134,7 +134,7 @@ class Program
             Console.WriteLine("6. Modify Flight Details");
             Console.WriteLine("7. Display Flight Schedule");
             Console.WriteLine("0. Exit");
-
+            Console.WriteLine(); // Add blank line
             Console.Write("Please select your option: ");
             string option = Console.ReadLine();
 
@@ -326,6 +326,12 @@ class Program
         if (terminal.Airlines.ContainsKey(airlineCode))
         {
             terminal.Airlines[airlineCode].AddFlight(newFlight);
+        }
+
+        // Append flight details to flights.csv
+        using (StreamWriter writer = new StreamWriter("flights.csv", true))
+        {
+            writer.WriteLine($"{flightNumber},{origin},{destination},{expectedTime:dd/MM/yyyy HH:mm},{specialRequest}");
         }
 
         Console.WriteLine($"Flight {newFlight.FlightNumber} has been added!");
