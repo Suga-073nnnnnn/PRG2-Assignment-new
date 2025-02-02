@@ -46,13 +46,13 @@ namespace S10270022_PRG2Assignment
             return true;
         }
 
-        public double CalculateFees()       // Need to test with Flight classes(Gabriel) / in main to see if calculation works correctly
+        public double CalculateFees()       // Advance feature, update if planning to implement advance
         {
             double totalFees = 0.0;
-            foreach (var flight in Flights.Values)      //Discuss on this part.
+            /*foreach (var flight in Flights.Values)      //Discuss on this part.
             {
-                totalFees += flight.CalculateFee();
-            }
+                totalFees += flight.CalculateFees();
+            }*/
             return totalFees;
 
         }
