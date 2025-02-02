@@ -1,7 +1,7 @@
 ﻿//==========================================================
 // Student Number	: S10270022
 // Student Name	: Suganesan
-// Partner Name	: Gabriel Lee
+// Partner Name	: Gabriel Lee S10259250
 //==========================================================
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace S10270022_PRG2Assignment
         }
         public override string ToString()
         {
-            return base.ToString();
+            return base.ToString() + "Special Request Code: DDJB";
         }
     }
 }
