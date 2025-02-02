@@ -122,7 +122,7 @@ class Program
                     //ModifyFlightDetails();
                     break;
                 case "7":
-                    //DisplayFlightSchedule();
+                    DisplayFlightSchedule();
                     break;
                 case "0":
                     Console.WriteLine("Goodbye!");
@@ -243,9 +243,18 @@ class Program
     }
 
 
-
-
-
+    // Basic Feature 9: Display Scheduled Flights Chronologically / IComeparable Interface (in flight class)
+    static void DisplayFlightSchedule()
+    {
+        var sortedFlights = terminal.Flights.Values.OrderBy(f => f.ExpectedTime);
+        Console.WriteLine("Flight Number   Airline Name           Origin                 Destination            Expected Time     Status");
+        foreach (var flight in sortedFlights)
+        {
+            Airline airline = terminal.GetAirlineFromFlight(flight);
+            string airlineName = airline != null ? airline.Name : "Unknown";
+            Console.WriteLine($"{flight.FlightNumber,-15}{airlineName,-20}{flight.Origin,-22}{flight.Destination,-22}{flight.ExpectedTime,-20}{flight.Status}");
+        }
+    }
 
 
 }
