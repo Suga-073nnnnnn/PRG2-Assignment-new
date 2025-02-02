@@ -46,7 +46,7 @@ class Program
     }
 
 
-<<<<<<< HEAD
+
     //Gabriel's 
     //load files for airline     //Basic 1
     static Dictionary<string, Airline> LoadAirlineFromCSV(string filename)
@@ -225,6 +225,4 @@ class Program
         }
 
     }
-//=======
-//>>>>>>> 47c2373d0f2ad76b59b81c630801e4ddec9c8bf6
 }
